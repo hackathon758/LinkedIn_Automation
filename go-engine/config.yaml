@@ -1,0 +1,107 @@
+# LinkedIn Automation Configuration
+
+credentials:
+  email: ""  # Set via environment: LINKEDIN_EMAIL
+  password: ""  # Set via environment: LINKEDIN_PASSWORD
+
+search:
+  job_titles:
+    - "Software Engineer"
+    - "Developer"
+  companies: []
+  locations:
+    - "San Francisco Bay Area"
+  keywords:
+    - "hiring"
+  max_pages: 5
+
+connection:
+  daily_limit: 50
+  templates:
+    - "Hi {{firstName}}, I noticed your work at {{company}} and would love to connect!"
+    - "Hello {{firstName}}, I'm impressed by your experience as a {{jobTitle}}. Let's connect!"
+  max_note_length: 300
+
+messaging:
+  daily_limit: 100
+  min_delay_minutes: 5
+  max_delay_minutes: 15
+  templates:
+    - "Thanks for connecting, {{firstName}}! I'd love to learn more about your work at {{company}}."
+    - "Great to connect, {{firstName}}! How's your experience in the {{jobTitle}} role?"
+
+rate_limits:
+  min_action_delay_ms: 5000
+  max_action_delay_ms: 15000
+  business_hours_start: 9
+  business_hours_end: 18
+  skip_weekends: true
+  cooldown_after_bulk_actions: 300  # seconds
+
+stealth:
+  # Bézier Curve Mouse Movement (MANDATORY)
+  bezier:
+    enabled: true
+    overshoot_probability: 0.15
+    min_steps: 20
+    max_steps: 50
+  
+  # Randomized Timing (MANDATORY)
+  timing:
+    typing_min_delay_ms: 50
+    typing_max_delay_ms: 150
+    typo_probability: 0.05
+    think_time_min_ms: 2000
+    think_time_max_ms: 5000
+  
+  # Browser Fingerprint (MANDATORY)
+  fingerprint:
+    rotate_user_agent: true
+    randomize_viewport: true
+    disable_webdriver_flag: true
+    randomize_timezone: true
+    obfuscate_canvas: true
+  
+  # Random Scrolling
+  scrolling:
+    enabled: true
+    min_speed: 50
+    max_speed: 300
+    scroll_back_probability: 0.1
+  
+  # Mouse Hovering
+  mouse:
+    hover_before_click: true
+    random_movement: true
+    hover_duration_min_ms: 100
+    hover_duration_max_ms: 500
+  
+  # Activity Scheduling
+  scheduling:
+    respect_business_hours: true
+    include_breaks: true
+    lunch_break_start: 12
+    lunch_break_end: 13
+  
+  # Request Headers
+  headers:
+    randomize: true
+    vary_accept_language: true
+  
+  # Network Simulation
+  network:
+    simulate_latency: true
+    latency_min_ms: 50
+    latency_max_ms: 200
+
+database:
+  path: "./linkedin_automation.db"
+
+logging:
+  level: "info"  # debug, info, warn, error
+  file: "./automation.log"
+  format: "json"  # json, text
+
+api:
+  backend_url: "http://localhost:8001/api"
+  sync_enabled: false
